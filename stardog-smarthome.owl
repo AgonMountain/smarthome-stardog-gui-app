@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#"
+     xml:base="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+    <owl:Ontology rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome">
+        <owl:versionIRI rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome/1"/>
+        <rdfs:comment>Онтология умного дома</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Human"/>
+        <rdfs:comment>&lt;Человек_А&gt; имеет доступ к &lt;Устройство_А, Дверь_А, Окно_А&gt;</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to_device -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to_device">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Device"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to_door -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to_door">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Door"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to_window -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to_window">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#has_access_to"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Window"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_door_of -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_door_of">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Door"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+        <rdfs:comment>&lt;Дверь_А&gt; является дверь комнаты &lt;Комната_А&gt;</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_in -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_in">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_located_in"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Human"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_located_in -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_located_in">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_located_in_room -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_located_in_room">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_located_in"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Device"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_window_of -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_window_of">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Window"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+        <rdfs:comment>&lt;Окно_А&gt; является окном комнаты &lt;Комната_А&gt;</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_open -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#is_open">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Window"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Bathroom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Bathroom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Bedroom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Bedroom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Childrensroom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Childrensroom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Device -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Device">
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Human"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Diningroom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Diningroom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Door -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Door"/>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Human -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Human"/>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Kitchen -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Kitchen">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Laptop -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Laptop">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Device"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Livingroom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Livingroom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Office -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Office">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Outside -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Outside">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Room"/>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Smartphone -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Smartphone">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Device"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Teapot -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Teapot">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Device"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Window -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Window"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#bedroom_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#bedroom_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Bedroom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#bedroom_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#bedroom_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Bedroom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#door_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#door_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Door"/>
+        <is_door_of rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#bedroom_1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#door_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#door_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Door"/>
+        <is_door_of rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#bedroom_2"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#kiselev_yury -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#kiselev_yury">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Human"/>
+        <has_access_to_device rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#laptop_1"/>
+        <is_in rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#kitchen_1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#kitchen_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#kitchen_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Kitchen"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#laptop_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#laptop_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Laptop"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#laptop_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#laptop_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Laptop"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#noskin_victor -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#noskin_victor">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Human"/>
+        <has_access_to_device rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#laptop_2"/>
+        <is_in rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#bedroom_1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#smartphone_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#smartphone_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Smartphone"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#smartphone_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#smartphone_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Smartphone"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#smartphone_3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#smartphone_3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Smartphone"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#teapot_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#teapot_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Teapot"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#window_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#window_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Window"/>
+        <is_open rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</is_open>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#window_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#window_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#Window"/>
+        <is_open rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</is_open>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
