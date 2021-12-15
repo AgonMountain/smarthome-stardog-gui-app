@@ -4,7 +4,6 @@ import re
 from config import conn_details, db_name
 
 
-
 def get_human_list():
   human_list = dict()
   human_id_list = [val for val in query('SELECT ?x WHERE { ?x rdf:type agn:Human }')]
@@ -15,10 +14,13 @@ def get_human_list():
   return human_list
 
 
+def get_device_type_list():
+  return [val for val in query('SELECT ?x WHERE { ?x rdfs:subClassOf agn:Device }')]
+
+
 def get_device_list():
-  device_type_list = [val for val in query('SELECT ?x WHERE { ?x rdfs:subClassOf agn:Device }')]
+  device_type_list = get_device_type_list()
   device_list = dict()
-  device_list.update({'type_list': device_type_list})
   for type in device_type_list:
     device_id_list = query('SELECT ?x WHERE { ?x rdf:type agn:' + type + ' }')
     for id in device_id_list:
@@ -28,10 +30,13 @@ def get_device_list():
   return device_list
 
 
+def get_room_type_list():
+  return [val for val in query('SELECT ?x WHERE { ?x rdfs:subClassOf agn:Room }')]
+
+
 def get_room_list():
-  room_type_list = [val for val in query('SELECT ?x WHERE { ?x rdfs:subClassOf agn:Room }')]
+  room_type_list = get_room_type_list()
   room_list = dict()
-  room_list.update({'type_list': room_type_list})
   for type in room_type_list:
     room_id_list = query('SELECT ?x WHERE { ?x rdf:type agn:' + type + ' }')
     for id in room_id_list:
@@ -65,6 +70,21 @@ def get_window_list():
   return window_list
 
 
+def get_connection(object, subject):
+  val = query('SELECT ?x WHERE { ?y ?x ?z FILTER (regex(str(?y), "' + object + '") && regex(str(?z), "' + subject + '")) }')
+  if len(val) > 0:
+    val = val[0]
+  else:
+    val = 'None'
+  return val
+
+
+def query(query, prefix='PREFIX agn: <http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#>'):
+  with stardog.Connection(db_name, **conn_details) as conn:
+    result = conn.select(prefix + ' ' + query)
+  return value(result)
+
+
 def value(source):
   value = []
   for i in range(len(source['results']['bindings'])):
@@ -73,10 +93,3 @@ def value(source):
     else:
       value.append(source['results']['bindings'][i]['x']['value'])
   return value
-
-
-
-def query(query, prefix='PREFIX agn: <http://www.semanticweb.org/agonm/ontologies/2021/10/stardog-smarthome#>'):
-  with stardog.Connection(db_name, **conn_details) as conn:
-    result = conn.select(prefix + ' ' + query)
-  return value(result)
