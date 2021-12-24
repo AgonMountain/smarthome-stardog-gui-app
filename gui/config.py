@@ -1,21 +1,50 @@
 from enum import Enum
 
 
-class EventKey(Enum):
+class ButtonEventKey(Enum):
+  BUTTON_CONNECT = '_button_connect_'
+  BUTTON_DISCONNECT = '_button_disconnect_'
+  BUTTON_NEW_HUMAN = '_button_new_human_'
+  BUTTON_ADD_HUMAN = '_button_add_human_'
+  BUTTON_SAVE_HUMAN = '_button_save_human_'
+  BUTTON_UPDATE_HUMAN = '_button_update_human_'
+  BUTTON_CANCEL_HUMAN = '_button_cancel_human_'
+  BUTTON_DELETE_HUMAN = '_button_delete_human_'
+  BUTTON_NEW_DEVICE = '_button_new_device_'
+  BUTTON_ADD_DEVICE = '_button_add_device_'
+  BUTTON_SAVE_DEVICE = '_button_save_device_'
+  BUTTON_UPDATE_DEVICE = '_button_update_device_'
+  BUTTON_CANCEL_DEVICE = '_button_cancel_device_'
+  BUTTON_DELETE_DEVICE = '_button_delete_device_'
+  BUTTON_NEW_ROOM = '_button_new_room_'
+  BUTTON_ADD_ROOM = '_button_add_room_'
+  BUTTON_SAVE_ROOM = '_button_save_room_'
+  BUTTON_UPDATE_ROOM = '_button_update_room_'
+  BUTTON_CANCEL_ROOM = '_button_cancel_room_'
+  BUTTON_DELETE_ROOM = '_button_delete_room_'
+  BUTTON_NEW_DOOR = '_button_new_door_'
+  BUTTON_ADD_DOOR = '_button_add_door_'
+  BUTTON_SAVE_DOOR = '_button_save_door_'
+  BUTTON_UPDATE_DOOR = '_button_update_door_'
+  BUTTON_CANCEL_DOOR = '_button_cancel_door_'
+  BUTTON_DELETE_DOOR = '_button_delete_door_'
+  BUTTON_NEW_WINDOW = '_button_new_window_'
+  BUTTON_ADD_WINDOW = '_button_add_window_'
+  BUTTON_SAVE_WINDOW = '_button_save_window_'
+  BUTTON_UPDATE_WINDOW = '_button_update_window_'
+  BUTTON_CANCEL_WINDOW = '_button_cancel_window_'
+  BUTTON_DELETE_WINDOW = '_button_delete_window_'
 
+
+class TableEventKey(Enum):
   TABLE_HUMAN = '_table_human_row_'
   TABLE_DEVICE = '_table_device_row_'
   TABLE_ROOM = '_table_room_row_'
   TABLE_DOOR = '_table_door_row_'
   TABLE_WINDOW = '_table_window_row_'
-  BUTTON_NEW = '_button_new_'
-  BUTTON_ADD = '_button_add_'
-  BUTTON_SAVE = '_button_save_'
-  BUTTON_UPDATE = '_button_update_'
-  BUTTON_CANCEL = '_button_cancel_'
-  BUTTON_DELETE = '_button_delete_'
-  BUTTON_CONNECT = '_button_connect_'
-  BUTTON_DISCONNECT = '_button_disconnect_'
+
+
+class FieldEventKey(Enum):
   FIELD_HUMAN_NAME = '_field_human_name_'
   FIELD_HUMAN_LOCATION = '_field_human_location_'
   FIELD_DEVICE_TYPE = '_field_device_type_'
@@ -35,36 +64,3 @@ class EventKey(Enum):
   FIELD_CONNECTION_LEFT = '_field_connection_left_'
   FIELD_CONNECTION_RIGHT = '_field_connection_right_'
   FIELD_CONNECTION_NAME = '_field_connection_name_'
-
-
-# event_key  = {
-#   table_human = '_table_human_row_',
-#   'table-device' = '_table_device_row_',
-#   'table-room' = '_table_room_row_',
-#   'table-door' = '_table_door_row_',
-#   'table-window' = '_table_window_row_',
-#   'button-new' = '_button_new_',
-#   'button-add' = '_button_add_',
-#   'button-update' = '_button_update_',
-#   'button-cancel' = '_button_cancel_',
-#   'button-delete' = '_button_delete_',
-#   'button-connect' = '_button_connect_',
-#   'button-disconnect' = '_button_disconnect_',
-#   'field-human-name' = '',
-#   'field-human-location' = '',
-#   'field-device-type' = '',
-#   'field-device-name' = '',
-#   'field-device-location' = '',
-#   'field-room-type' = '',
-#   'field-room-name' = '',
-#   'field-door-room-a' = '',
-#   'field-door-room-b' = '',
-#   'field-door-name' = '',
-#   'field-door-is-open' = '',
-#   'field-window-room' = '',
-#   'field-window-name' = '',
-#   'field-window-is-open' = '',
-#   'field-connection-left' = '',
-#   'field-connection-right' = '',
-#   'field-connection-name' = '',
-# }
