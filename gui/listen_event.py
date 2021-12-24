@@ -1,7 +1,7 @@
 # from gui.update_fields import *
 # from gui.set_fileds import *
-# from db_funcs.insert import *
-# from db_funcs.delete import *
+# from db_stardog.insert import *
+# from db_stardog.delete import *
 #
 # def get_id(values, tab_data, table_row_name, list_name):
 #     if len(values[table_row_name]) == 1:

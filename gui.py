@@ -1,21 +1,20 @@
 import PySimpleGUI as sg
 from config import connection as con
-from db_funcs.select import *
-from db_funcs.insert import *
-from db_funcs.delete import *
+from db_stardog.select import *
+from db_stardog.insert import *
+from db_stardog.delete import *
 from gui.set_fileds import *
+from gui.config import EventKey
 
-def update_app():
-    d = data()
-    tab_data = convert_for_tab(data)
+
 
 def update_connection_fields(object_id, object_class):
-    if len(values['_table_human_row_']) == 1 and object_id is not None:
-        table_row_index = values['_table_human_row_'][0]
+    if len(values[EventKey.TABLE_HUMAN.value]) == 1 and object_id is not None:
+        table_row_index = values[EventKey.TABLE_HUMAN.value][0]
         human_id = tab_data['human_list'][table_row_index][0]
         connection = get_connection(human_id, object_id).replace('_', ' ')
         available_connection_list = [c.replace('_', ' ') for c in con['human-' + object_class]]
-        window['_connection_'].Update(value=connection, values=available_connection_list)
+        window[EventKey.FIELD_CONNECTION_NAME.value].Update(value=connection, values=available_connection_list)
 
 def get_id(table_row_name, list_name):
     if len(values[table_row_name]) == 1:
@@ -24,35 +23,39 @@ def get_id(table_row_name, list_name):
         return id
     return None
 
-def listen_event(event):
-    if event == '_table_human_row_':
-        set_human_fields(window, values, tab_data, data)
-    elif event == '_table_device_row_':
-        id = set_device_fields(window, values, tab_data, data)
-        update_connection_fields(id, 'device')
-    elif event == '_table_room_row_':
-        id = set_room_fields(window, values, tab_data, data)
-        update_connection_fields(id, 'room')
-    elif event == '_table_door_row_':
-        id = set_door_fields(window, values, tab_data, data)
-        update_connection_fields(id, 'door')
-    elif event == '_table_window_row_':
-        id = set_window_fields(window, values, tab_data, data)
-        update_connection_fields(id, 'window')
+def listen_table_event(event):
+
+    if event == EventKey.TABLE_HUMAN.value:
+        bubble_1 = set_human_fields(window, values, tab_data, data)
+    elif event == EventKey.TABLE_DEVICE.value:
+        bubble_2 = set_device_fields(window, values, tab_data, data)
+        update_connection_fields(bubble_2, 'device')
+    elif event == EventKey.TABLE_ROOM.value:
+        bubble_2 = set_room_fields(window, values, tab_data, data)
+        update_connection_fields(bubble_2, 'room')
+    elif event == EventKey.TABLE_DOOR.value:
+        bubble_2 = set_door_fields(window, values, tab_data, data)
+        update_connection_fields(bubble_2, 'door')
+    elif event == EventKey.TABLE_WINDOW.value:
+        bubble_2 = set_window_fields(window, values, tab_data, data)
+        update_connection_fields(bubble_2, 'window')
 
 def listen_cancel_button_event(event):
-    if event == '_human_cancel_btn_':
-        set_human_fields(window, values, tab_data, data)
-    elif event == '_device_cancel_btn_':
-        set_device_fields(window, values, tab_data, data)
-    elif event == '_room_cancel_btn_':
-        set_room_fields(window, values, tab_data, data)
-    elif event == '_door_cancel_btn_':
-        set_door_fields(window, values, tab_data, data)
-    elif event == '_window_cancel_btn_':
-        set_window_fields(window, values, tab_data, data)
-    # elif event == '_connection_cancel_btn_':
-    #     set_connection_fields()
+
+    if EventKey.BUTTON_CANCEL.value:
+
+        if bubble_2 == '':
+            set_human_fields(window, values, tab_data, data)
+        elif bubble_2 == '':
+            set_device_fields(window, values, tab_data, data)
+        elif bubble_2 == '':
+            set_room_fields(window, values, tab_data, data)
+        elif bubble_2 == '':
+            set_door_fields(window, values, tab_data, data)
+        elif bubble_2 == '':
+            set_window_fields(window, values, tab_data, data)
+        # elif bubble_2 == :
+        #     set_connection_fields()
 def listen_new_button_event(event):
     if event == '_human_new_btn_':
         update_human_fields(window, '', '', '')
@@ -126,87 +129,118 @@ def convert_for_tab(data):
 data = data()
 tab_data = convert_for_tab(data)
 
-
 tab1_humans_layout = [
-                            [sg.Table(headings=['Actual'], values=tab_data['human_list'], enable_events=True, key='_table_human_row_'),
+                            [sg.Table(headings=['Actual'], values=tab_data['human_list'], enable_events=True,
+                                      key=EventKey.TABLE_HUMAN.value),
                             sg.Frame('', [
                                 [sg.Text('Human name', size=(15, 1)),
-                                 sg.InputText(key='_human_name_', size=(30,1))],
+                                 sg.InputText(key=EventKey.FIELD_HUMAN_NAME.value, size=(30,1))],
                                 [sg.Text('Is located in', size=(15, 1)),
-                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1), readonly=True, enable_events=True, key='_human_is_located_in_')],
-                                [sg.Button(button_text='Add', key='_human_add_btn_'), sg.Button(button_text='Save'), sg.Button(button_text='Cancel', key='_human_cancel_btn_')]
+                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1), readonly=True,
+                                               enable_events=True, key=EventKey.FIELD_HUMAN_LOCATION.value)],
+                                [sg.Button(button_text='Add', key=EventKey.BUTTON_ADD.value),
+                                 sg.Button(button_text='Save', key=EventKey.BUTTON_SAVE.value),
+                                 sg.Button(button_text='Cancel', key=EventKey.BUTTON_CANCEL.value)]
                             ])],
-                            [sg.Button(button_text='New', key='_human_new_btn_'), sg.Button(button_text='Delete', key='_human_delete_btn_')]
+                            [sg.Button(button_text='New', key=EventKey.BUTTON_NEW.value),
+                             sg.Button(button_text='Delete', key=EventKey.BUTTON_DELETE.value)]
                       ]
 tab2_devices_layout = [
-                            [sg.Table(headings=['Actual'], values=tab_data['device_list'], enable_events=True, key='_table_device_row_'),
+                            [sg.Table(headings=['Actual'], values=tab_data['device_list'],
+                                      enable_events=True, key=EventKey.TABLE_DEVICE.value),
                              sg.Frame('', [
                                 [sg.Text('Device type', size=(15, 1)),
-                                 sg.InputCombo(tab_data['device_type_list'], size=(30, 1), readonly=True, key='_device_type_'),
+                                 sg.InputCombo(tab_data['device_type_list'], size=(30, 1),
+                                               readonly=True, key=EventKey.FIELD_DEVICE_TYPE.value),
                                  sg.Button(button_text='Add new type')],
                                 [sg.Text('Device name', size=(15, 1)),
-                                 sg.InputText(size=(30,1), key='_device_name_')],
+                                 sg.InputText(size=(30,1), key=EventKey.FIELD_DEVICE_NAME.value)],
                                 [sg.Text('Is located in', size=(15, 1)),
-                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1), readonly=True, key='_device_is_located_in_')],
-                                [sg.Button(button_text='Add', key='_device_add_btn_'), sg.Button(button_text='Save'), sg.Button(button_text='Cancel', key='_device_cancel_btn_')]
+                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1),
+                                               readonly=True, key=EventKey.FIELD_DEVICE_LOCATION.value)],
+                                [sg.Button(button_text='Add', key=EventKey.BUTTON_ADD.value),
+                                 sg.Button(button_text='Save', key=EventKey.BUTTON_SAVE.value),
+                                 sg.Button(button_text='Cancel', key=EventKey.BUTTON_CANCEL.value)]
                             ])],
-                            [sg.Button(button_text='New', key='_device_new_btn_'), sg.Button(button_text='Delete')]
+                            [sg.Button(button_text='New', key=EventKey.BUTTON_NEW.value),
+                             sg.Button(button_text='Delete', key=EventKey.BUTTON_DELETE.value)]
                     ]
 tab3_rooms_layout = [
-                            [sg.Table(headings=['Actual'], values=tab_data['room_list'], enable_events=True, key='_table_room_row_'),
+                            [sg.Table(headings=['Actual'], values=tab_data['room_list'],
+                                      enable_events=True, key=EventKey.TABLE_ROOM.value),
                             sg.Frame('', [
                                 [sg.Text('Room type', size=(15, 1)),
-                                 sg.InputCombo(tab_data['room_type_list'], size=(30, 1), readonly=True, key='_room_type_')],
+                                 sg.InputCombo(tab_data['room_type_list'], size=(30, 1),
+                                               readonly=True, key=EventKey.FIELD_ROOM_TYPE.value)],
                                 [sg.Text('Room name', size=(15, 1)),
-                                 sg.InputText(key='_room_name_', size=(30,1))],
-                                [sg.Button(button_text='Add', key='_room_add_btn_'), sg.Button(button_text='Save'), sg.Button(button_text='Cancel', key='_room_cancel_btn_')]
+                                 sg.InputText(key=EventKey.FIELD_ROOM_NAME.value, size=(30,1))],
+                                [sg.Button(button_text='Add', key=EventKey.BUTTON_ADD.value),
+                                 sg.Button(button_text='Save', key=EventKey.BUTTON_SAVE.value),
+                                 sg.Button(button_text='Cancel', key=EventKey.BUTTON_CANCEL.value)]
                             ])],
-                            [sg.Button(button_text='New', key='_room_new_btn_'), sg.Button(button_text='Delete')]
+                            [sg.Button(button_text='New', key=EventKey.BUTTON_NEW.value),
+                             sg.Button(button_text='Delete', key=EventKey.BUTTON_DELETE.value)]
                     ]
 tab4_doors_layout = [
-                            [sg.Table(headings=['Actual'], values=tab_data['door_list'], enable_events=True, key='_table_door_row_'),
+                            [sg.Table(headings=['Actual'], values=tab_data['door_list'],
+                                      enable_events=True, key=EventKey.TABLE_DOOR.value),
                              sg.Frame('', [
                                 [sg.Text('Door between', size=(15, 1)),
-                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1), readonly=True, key='_is_door_of_A_'),
+                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1),
+                                               readonly=True, key=EventKey.FIELD_DOOR_ROOM_A.value),
                                  sg.Text('and', size=(3, 1)),
-                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1), readonly=True, key='_is_door_of_B_')],
+                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1),
+                                               readonly=True, key=EventKey.FIELD_DOOR_ROOM_B.value)],
                                 [sg.Text('Door name', size=(15, 1)),
-                                 sg.InputText(key='_door_name_', size=(30,1))],
+                                 sg.InputText(key=EventKey.FIELD_DOOR_NAME.value, size=(30,1))],
                                 [sg.Text('Status', size=(15, 1)),
-                                 sg.Radio('Is Open', "RADIO_DOOR", size=(10, 1), key='_door_is_open_'),
-                                 sg.Radio('Is Closed', "RADIO_DOOR", default=True, key='_door_is_closed_')],
-                                [sg.Button(button_text='Add', key='_door_add_btn_'), sg.Button(button_text='Save'), sg.Button(button_text='Cancel', key='_door_cancel_btn_')]
-                            ])],
-                            [sg.Button(button_text='New', key='_door_new_btn_'), sg.Button(button_text='Delete')]
+                                 sg.Radio('Is Open', 'RADIO_DOOR', size=(10, 1), key=EventKey.FIELD_DOOR_IS_OPEN.value),
+                                 sg.Radio('Is Closed', 'RADIO_DOOR', default=True, key=EventKey.FIELD_DOOR_IS_CLOSE.value)],
+                                 [sg.Button(button_text='Add', key=EventKey.BUTTON_ADD.value),
+                                  sg.Button(button_text='Save', key=EventKey.BUTTON_SAVE.value),
+                                  sg.Button(button_text='Cancel', key=EventKey.BUTTON_CANCEL.value)]
+                             ])],
+                            [sg.Button(button_text='New', key=EventKey.BUTTON_NEW.value),
+                             sg.Button(button_text='Delete', key=EventKey.BUTTON_DELETE.value)]
                     ]
 tab5_windows_layout = [
-                            [sg.Table(headings=['Actual'], values=tab_data['window_list'], enable_events=True, key='_table_window_row_'),
+                            [sg.Table(headings=['Actual'], values=tab_data['window_list'],
+                                      enable_events=True, key=EventKey.TABLE_WINDOW.value),
                              sg.Frame('', [
                                 [sg.Text('Window is in', size=(15, 1)),
-                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1), readonly=True, key='_is_window_of_')],
+                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1),
+                                               readonly=True, key=EventKey.FIELD_WINDOW_ROOM.value)],
                                 [sg.Text('Window name', size=(15, 1)),
-                                 sg.InputText(key='_window_name_', size=(30,1))],
+                                 sg.InputText(key=EventKey.FIELD_WINDOW_NAME.value, size=(30,1))],
                                 [sg.Text('Status', size=(15, 1)),
-                                 sg.Radio('Is Open', "RADIO_WINDOW", size=(10,1), key='_window_is_open_'),
-                                 sg.Radio('Is Closed', "RADIO_WINDOW", default=True, key='_window_is_closed_')],
-                                [sg.Button(button_text='Add', key='_window_add_btn_'), sg.Button(button_text='Save'), sg.Button(button_text='Cancel', key='_window_cancel_btn_')]
-                            ])],
-                            [sg.Button(button_text='New', key='_window_new_btn_'), sg.Button(button_text='Delete')]
+                                 sg.Radio('Is Open', "RADIO_WINDOW", size=(10,1), key=EventKey.FIELD_WINDOW_IS_OPEN.value),
+                                 sg.Radio('Is Closed', "RADIO_WINDOW", default=True, key=EventKey.FIELD_WINDOW_IS_CLOSE.value)],
+                                 [sg.Button(button_text='Add', key=EventKey.BUTTON_ADD.value),
+                                  sg.Button(button_text='Save', key=EventKey.BUTTON_SAVE.value),
+                                  sg.Button(button_text='Cancel', key=EventKey.BUTTON_CANCEL.value)]])
+                            ],
+                            [sg.Button(button_text='New', key=EventKey.BUTTON_NEW.value),
+                             sg.Button(button_text='Delete', key=EventKey.BUTTON_DELETE.value)]
                     ]
 layout = [
-    [sg.TabGroup([[sg.Tab('Devices', tab2_devices_layout),
+            [sg.TabGroup([[sg.Tab('Devices', tab2_devices_layout),
                             sg.Tab('Rooms', tab3_rooms_layout),
                             sg.Tab('Doors', tab4_doors_layout),
                             sg.Tab('Windows', tab5_windows_layout)]])],
-            [sg.Text('Human', size=(30, 1)), sg.Text('Connection', size=(30, 1)), sg.Text(''), sg.Text('Object', size=(30, 1))],
-            [sg.InputText(size=(30,1), readonly=True, key='_connection_left_'),
-             sg.InputCombo('', size=(30, 1), readonly=True, key='_connection_'),
-             sg.InputText(size=(30,1), readonly=True, key='_connection_right_')],
-            [sg.Button(button_text='Connect'),
-             sg.Button(button_text='Disconnect')],
+            [sg.Text('Human', size=(30, 1)),
+             sg.Text('Connection', size=(30, 1)),
+             sg.Text(''),
+             sg.Text('Object', size=(30, 1))],
+            [sg.InputText(size=(30,1), readonly=True, key=EventKey.FIELD_CONNECTION_LEFT.value),
+             sg.InputCombo('', size=(30, 1), readonly=True, key=EventKey.FIELD_CONNECTION_NAME.value),
+             sg.InputText(size=(30,1), readonly=True, key=EventKey.FIELD_CONNECTION_RIGHT.value)],
+            [sg.Button(button_text='Connect', key=EventKey.BUTTON_CONNECT.value),
+             sg.Button(button_text='Disconnect', key=EventKey.BUTTON_DISCONNECT.value)],
             [sg.TabGroup([[sg.Tab('Humans', tab1_humans_layout)]])]]
 
 window = sg.Window('Smarthome+Stardog', layout)
+bubble_1 = 0
+bubble_2 = 0
 while True:
     event, values = window.read()
 
@@ -214,7 +248,8 @@ while True:
         break
     print('You entered ', values[0])
 
-    listen_event(event)
+
+    listen_table_event(event)
     listen_cancel_button_event(event)
     listen_new_button_event(event)
     listen_add_button_event(event)

@@ -1,4 +1,4 @@
-from db_funcs.basis import *
+from db_stardog.basis import *
 
 
 def insert_human(name, is_located_in):
