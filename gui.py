@@ -7,7 +7,6 @@ from gui.set_fileds import *
 from gui.config import EventKey
 
 
-
 def update_connection_fields(object_id, object_class):
     if len(values[EventKey.TABLE_HUMAN.value]) == 1 and object_id is not None:
         table_row_index = values[EventKey.TABLE_HUMAN.value][0]
@@ -26,34 +25,31 @@ def get_id(table_row_name, list_name):
 def listen_table_event(event):
 
     if event == EventKey.TABLE_HUMAN.value:
-        bubble_1 = set_human_fields(window, values, tab_data, data)
+        set_human_fields(window, values, tab_data, data)
     elif event == EventKey.TABLE_DEVICE.value:
-        bubble_2 = set_device_fields(window, values, tab_data, data)
-        update_connection_fields(bubble_2, 'device')
+        set_device_fields(window, values, tab_data, data)
     elif event == EventKey.TABLE_ROOM.value:
-        bubble_2 = set_room_fields(window, values, tab_data, data)
-        update_connection_fields(bubble_2, 'room')
+        set_room_fields(window, values, tab_data, data)
     elif event == EventKey.TABLE_DOOR.value:
-        bubble_2 = set_door_fields(window, values, tab_data, data)
-        update_connection_fields(bubble_2, 'door')
+        set_door_fields(window, values, tab_data, data)
     elif event == EventKey.TABLE_WINDOW.value:
-        bubble_2 = set_window_fields(window, values, tab_data, data)
-        update_connection_fields(bubble_2, 'window')
+        set_window_fields(window, values, tab_data, data)
 
-def listen_cancel_button_event(event):
 
-    if EventKey.BUTTON_CANCEL.value:
+# def listen_cancel_button_event(event):
+#
+#     if EventKey.BUTTON_CANCEL.value:
 
-        if bubble_2 == '':
-            set_human_fields(window, values, tab_data, data)
-        elif bubble_2 == '':
-            set_device_fields(window, values, tab_data, data)
-        elif bubble_2 == '':
-            set_room_fields(window, values, tab_data, data)
-        elif bubble_2 == '':
-            set_door_fields(window, values, tab_data, data)
-        elif bubble_2 == '':
-            set_window_fields(window, values, tab_data, data)
+        # if bubble_2 == '':
+        #     set_human_fields(window, values, tab_data, data)
+        # elif bubble_2 == '':
+        #     set_device_fields(window, values, tab_data, data)
+        # elif bubble_2 == '':
+        #     set_room_fields(window, values, tab_data, data)
+        # elif bubble_2 == '':
+        #     set_door_fields(window, values, tab_data, data)
+        # elif bubble_2 == '':
+        #     set_window_fields(window, values, tab_data, data)
         # elif bubble_2 == :
         #     set_connection_fields()
 def listen_new_button_event(event):
@@ -71,13 +67,13 @@ def listen_add_button_event(event):
     if event == '_human_add_btn_':
         name = window['_human_name_'].get()
         room = window['_human_is_located_in_'].get()[0]
-        room_id = data['reverse_room_list'][room]
+        room_id = data['room_list'][room]
         insert_human(name, room_id)
     elif event == '_device_add_btn_':
         name = window['_device_name_'].get()
         type = window['_device_type_'].get()[0]
         room = window['_device_is_located_in_'].get()[0]
-        room_id = data['reverse_room_list'][room]
+        room_id = data['room_list'][room]
         insert_device(name, type, room_id)
     elif event == '_room_add_btn_':
         update_room_fields(window, '', '', '')
@@ -85,7 +81,6 @@ def listen_add_button_event(event):
         update_door_fields(window, '', False, '', '', '')
     elif event == '_window_add_btn_':
         update_window_fields(window, '', False, '', '')
-
 def listen_delete_button_event(event):
     if event == '_human_delete_btn_':
         id = get_id('_table_human_row_', 'human_list')
@@ -106,8 +101,8 @@ def data():
     return {
         'human_list': get_human_list(),
         'device_list': get_device_list(),
-        'room_list': room_list[0],
-        'reverse_room_list': room_list[1],
+        'room_list': room_list, #[0],
+        #'reverse_room_list': room_list[1],
         'door_list': get_door_list(),
         'window_list': get_window_list(),
         'device_type_list': get_device_type_list(),
@@ -136,7 +131,7 @@ tab1_humans_layout = [
                                 [sg.Text('Human name', size=(15, 1)),
                                  sg.InputText(key=EventKey.FIELD_HUMAN_NAME.value, size=(30,1))],
                                 [sg.Text('Is located in', size=(15, 1)),
-                                 sg.InputCombo(tab_data['room_name_list'], size=(30, 1), readonly=True,
+                                 sg.InputCombo(tab_data['room_list'], size=(30, 1), readonly=True,
                                                enable_events=True, key=EventKey.FIELD_HUMAN_LOCATION.value)],
                                 [sg.Button(button_text='Add', key=EventKey.BUTTON_ADD.value),
                                  sg.Button(button_text='Save', key=EventKey.BUTTON_SAVE.value),
@@ -239,8 +234,8 @@ layout = [
             [sg.TabGroup([[sg.Tab('Humans', tab1_humans_layout)]])]]
 
 window = sg.Window('Smarthome+Stardog', layout)
-bubble_1 = 0
-bubble_2 = 0
+
+
 while True:
     event, values = window.read()
 
@@ -248,9 +243,8 @@ while True:
         break
     print('You entered ', values[0])
 
-
     listen_table_event(event)
-    listen_cancel_button_event(event)
+    #listen_cancel_button_event(event)
     listen_new_button_event(event)
     listen_add_button_event(event)
     listen_delete_button_event(event)

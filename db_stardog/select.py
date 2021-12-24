@@ -34,14 +34,14 @@ def get_room_type_list():
 def get_room_list():
   room_type_list = get_room_type_list()
   room_list = dict()
-  reverse_room_list = dict()
+  #reverse_room_list = dict()
   for type in room_type_list:
     room_id_list = select('SELECT ?x WHERE { ?x rdf:type agn:' + type + ' }')
     for id in room_id_list:
       name = select('SELECT ?x WHERE { ?y agn:has_room_name ?x FILTER regex(str(?y), "' + id + '")}')
       room_list.update({id: {'type': type, 'name': name[0]}})
-      reverse_room_list.update({name[0]: id})
-  return room_list, reverse_room_list
+      #reverse_room_list.update({name[0]: id})
+  return room_list#, reverse_room_list
 
 
 def get_door_list():
