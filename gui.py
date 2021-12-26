@@ -17,12 +17,12 @@ def update_connection_fields():
         window[FieldEventKey.FIELD_CONNECTION_NAME.value].Update(value=connection) #, values=available_connection_list)
 
 
-def get_id(table_row_name, list_name):
-    if len(values[table_row_name]) == 1:
-        index = values[table_row_name][0]
-        id = tab_data[list_name][index][0]
-        return id
-    return None
+# def get_id(table_row_name, list_name):
+#     if len(values[table_row_name]) == 1:
+#         index = values[table_row_name][0]
+#         id = tab_data[list_name][index][0]
+#         return id
+#     return None
 
 
 def listen_table_event(event):
@@ -89,12 +89,14 @@ def listen_new_button_event(event):
 #         update_window_fields(window, '', False, '', '')
 #
 #
-# def listen_delete_button_event(event):
-#     if event == '_human_delete_btn_':
-#         id = get_id('_table_human_row_', 'human_list')
-#         name = data['human_list'].get(id)['name']
-#         is_located_in = data['human_list'].get(id)['is_located_in']
-#         delete_human(id, name, is_located_in)
+def listen_delete_button_event(event):
+    if event == ButtonEventKey.BUTTON_DELETE_HUMAN.value:
+        if len(values[TableEventKey.TABLE_HUMAN.value]) == 1:
+            index = values[TableEventKey.TABLE_HUMAN.value][0]
+            id = tab_data['human_list'][index][0]
+            name = data['human_list'].get(id)['name']
+            is_located_in = data['human_list'].get(id)['is_located_in']
+            delete_human(id, name, is_located_in)
 #     elif event == '_device_delete_btn_':
 #         delete_device('', '', '', '')
 #     elif event == '_room_delete_btn_':
@@ -257,7 +259,7 @@ while True:
     listen_cancel_button_event(event)
     listen_new_button_event(event)
     # listen_add_button_event(event)
-    # listen_delete_button_event(event)
+    listen_delete_button_event(event)
 
 window.close()
 

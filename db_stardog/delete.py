@@ -2,10 +2,10 @@ from db_stardog.basis import *
 
 
 def delete_human(id, name, is_located_in):
-  insert('DELETE DATA { <http://smarthome#' + id + '> ' +
-                                  'rdf:type agn:Human ; ' +
-                                  'agn:is_human_located_in <http://smarthome#' + is_located_in + '>; ' +
-                                  'agn:has_human_name "' + name + '". }')
+  insert('DELETE DATA { :' + id + ' ' +
+                                  'a :Human ; ' +
+                                  ':is_human_located_in :' + is_located_in + '; ' +
+                                  ':has_human_name "' + name + '". }')
 
 
 def delete_device(id, name, type, is_located_in):
