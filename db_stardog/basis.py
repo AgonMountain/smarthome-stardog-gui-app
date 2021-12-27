@@ -4,12 +4,18 @@ import re
 from config import conn_details, db_name
 
 
-def insert(query, prefix='PREFIX agn: <http://smarthome#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>'):
+def insert(query, prefix='PREFIX agn: <http://smarthome#> ' +
+                         'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ' +
+                         'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ' +
+                         'PREFIX owl: <http://www.w3.org/2002/07/owl#> '):
   with stardog.Connection(db_name, **conn_details) as conn:
     conn.update(prefix + ' ' + query)
 
 
-def select(query, prefix='PREFIX agn: <http://smarthome#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>'):
+def select(query, prefix='PREFIX agn: <http://smarthome#> ' +
+                         'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ' +
+                         'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' +
+                         'PREFIX owl: <http://www.w3.org/2002/07/owl#> '):
   with stardog.Connection(db_name, **conn_details) as conn:
     result = conn.select(prefix + ' ' + query)
   return value(result)
