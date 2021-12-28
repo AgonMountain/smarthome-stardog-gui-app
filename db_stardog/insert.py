@@ -2,14 +2,14 @@ from db_stardog.basis import *
 
 
 def insert_human(name, is_located_in):
-  human_id = 'human_' + get_unique_id()
+  human_id = 'Human_' + get_unique_id()
   insert('INSERT DATA { agn:' + human_id + ' a agn:Human , owl:NamedIndividual ; ' +
                                   ' agn:is_human_located_in agn:' + is_located_in + ' ; ' +
                                   ' agn:has_human_name "' + name + '" . }')
 
 
 def insert_device(name, type, is_located_in):
-  device_id = 'device_' + get_unique_id()
+  device_id = type + '_' + get_unique_id()
   insert('INSERT DATA { agn:' + device_id + ' a agn:' + type + ' , owl:NamedIndividual ; ' +
                                   ' agn:is_device_located_in agn:' + is_located_in + ' ; ' +
                                   ' agn:has_device_name "' + name + '" . }')
@@ -20,13 +20,13 @@ def insert_device_type(name):
 
 
 def insert_room(name, type):
-  room_id = 'room_' + get_unique_id()
+  room_id = type + '_' + get_unique_id()
   insert('INSERT DATA { agn:' + room_id + ' a agn:' + type + ' , owl:NamedIndividual ; ' +
                                   ' agn:has_room_name "' + name + '" . }')
 
 
 def insert_door(name, is_door_open, is_door_of_list):
-  door_id = 'door_' + get_unique_id()
+  door_id = 'Door_' + get_unique_id()
   is_open = 'false'
   if is_door_open:
     is_open = 'true'
@@ -41,7 +41,7 @@ def insert_door(name, is_door_open, is_door_of_list):
 
 
 def insert_window(name, is_window_open, is_window_of_list):
-  door_id = 'window_' + get_unique_id()
+  door_id = 'Window_' + get_unique_id()
   is_open = 'false'
   if is_window_open:
     is_open = 'true'

@@ -67,7 +67,25 @@ def get_window_list():
   return window_list
 
 
-def get_connection(left_id, right_id):
+def get_connection_list():
+  connection_dict = dict()
+  connection_dict.update({'human-device':
+                            [val.replace('_', ' ') for val in select(
+                              'SELECT DISTINCT ?x WHERE { ?x ?p ?s . ?x rdfs:domain agn:Human . ?x a owl:ObjectProperty . ?x rdfs:range agn:Device }')]})
+  connection_dict.update({'human-room':
+                            [val.replace('_', ' ') for val in select(
+                              'SELECT DISTINCT ?x WHERE { ?x ?p ?s . ?x rdfs:domain agn:Human . ?x a owl:ObjectProperty . ?x rdfs:range agn:Room }')]})
+  connection_dict.update({'human-door':
+                            [val.replace('_', ' ') for val in select(
+                              'SELECT DISTINCT ?x WHERE { ?x ?p ?s . ?x rdfs:domain agn:Human . ?x a owl:ObjectProperty . ?x rdfs:range agn:Door }')]})
+  connection_dict.update({'human-window':
+                            [val.replace('_', ' ') for val in select(
+                              'SELECT DISTINCT ?x WHERE { ?x ?p ?s . ?x rdfs:domain agn:Human . ?x a owl:ObjectProperty . ?x rdfs:range agn:Window }')]})
+
+  return connection_dict
+
+
+def get_connection_for(left_id, right_id):
   val = select('SELECT ?x WHERE { agn:' + left_id + ' ?x agn:' + right_id + ' }')
   if len(val) > 0:
     val = val[0].replace('_', ' ')
